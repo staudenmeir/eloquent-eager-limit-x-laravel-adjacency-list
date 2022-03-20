@@ -1,0 +1,34 @@
+{
+    "name": "staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list",
+    "description": "Merge staudenmeir/eloquent-eager-limit and staudenmeir/laravel-adjacency-list",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jonas Staudenmeir",
+            "email": "mail@jonas-staudenmeir.de"
+        }
+    ],
+    "require": {
+        "php": "^8.0.2",
+        "illuminate/database": "^9.0",
+        "staudenmeir/eloquent-eager-limit-x-laravel-cte": "v1.0",
+        "staudenmeir/laravel-adjacency-list": "^v1.10.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Staudenmeir\\EloquentEagerLimitXLaravelAdjacencyList\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Staudenmeir\\EloquentEagerLimitXLaravelAdjacencyList\\Tests\\": "tests",
+            "Staudenmeir\\EloquentEagerLimit\\Tests\\": "tests/EloquentEagerLimit",
+            "Staudenmeir\\LaravelAdjacencyList\\Tests\\": "tests/LaravelAdjacencyList"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
