@@ -2,20 +2,38 @@
 
 namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Query\Grammars;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Grammars\MySqlGrammar as Base;
 
 class MySqlGrammar extends Base implements EagerLimitGrammar
 {
     /**
-     * Compile a substring of the first path segment.
+     * Compile an extraction of the first path segment.
      *
-     * @param string $column
+     * @param string $pathColumn
      * @return string
      */
-    public function compileFirstPathSegment($column)
+    public function compileFirstPathSegment(string $pathColumn): string
     {
-        $column = $this->wrap($column);
+        $pathColumn = $this->wrap($pathColumn);
 
-        return "substring_index($column, ?, 1)";
+        return "substring_index($pathColumn, ?, 1)";
+    }
+
+    /**
+     * Compile an extraction of the first path segment's parent key.
+     *
+     * @param string $pathColumn
+     * @param string $parentKeyColumn
+     * @param \Illuminate\Database\Query\Builder $parentKeyQuery
+     * @return string
+     */
+    public function compileParentKeyOfFirstPathSegment(string $pathColumn, string $parentKeyColumn, Builder $parentKeyQuery): string
+    {
+        $column = $this->wrap($pathColumn);
+        $parentKeyColumn = $this->wrap($parentKeyColumn);
+        $sql = $parentKeyQuery->toSql();
+
+        return "if(instr($column, ?) = 0, $parentKeyColumn, ($sql))";
     }
 }

@@ -34,8 +34,17 @@ class User extends Model
 
 ### Limitations
 
-Eager loading limits are not supported on `Descendants` and `*OfDescendants`relationships. They *are* supported
-on `DescendantsAndSelf` relationships.
+`Descendants` relationships only support eager loading limit when the query is ordered breadth-first (siblings before children):
+
+```php
+$users = User::with([
+    'descendants' => function ($query) {
+        $query->breadthFirst()->limit(10);
+    }
+])->get();
+```
+
+`*OfDescendants` relationships do not support eager loading limits.
 
 ## Contributing
 

@@ -1,6 +1,6 @@
 {
     "name": "staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list",
-    "description": "Merge staudenmeir/eloquent-eager-limit and staudenmeir/laravel-adjacency-list",
+    "description": "Merge of staudenmeir/eloquent-eager-limit and staudenmeir/laravel-adjacency-list",
     "license": "MIT",
     "authors": [
         {

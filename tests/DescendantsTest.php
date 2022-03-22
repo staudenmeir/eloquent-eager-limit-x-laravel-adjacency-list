@@ -24,13 +24,17 @@ class DescendantsTest extends TestCase
 
     public function testEagerLoading()
     {
-        $this->expectExceptionMessage('Eager loading limits are not supported on Descendants relationships.');
-
-        User::with(
+        $users = User::with(
             [
-                'descendants' => fn ($query) => $query->orderByDesc('depth')->orderBy('id')->limit(3),
+                'descendants' => fn ($query) => $query->orderBy('depth')->orderBy('id')->limit(4),
             ]
         )->get();
+
+        $this->assertEquals([2, 3, 4, 5], $users[0]->descendants->pluck('id')->all());
+        $this->assertEquals([12], $users[9]->descendants->pluck('id')->all());
+        $this->assertEquals([], $users[10]->descendants->pluck('id')->all());
+        $this->assertEquals([1, 1, 1, 2], $users[0]->descendants->pluck('depth')->all());
+        $this->assertEquals(['2', '3', '4', '2.5'], $users[0]->descendants->pluck('path')->all());
     }
 
     public function testEagerLoadingAndSelf()
@@ -50,13 +54,17 @@ class DescendantsTest extends TestCase
 
     public function testLazyEagerLoading()
     {
-        $this->expectExceptionMessage('Eager loading limits are not supported on Descendants relationships.');
-
-        User::all()->load(
+        $users = User::all()->load(
             [
-                'descendants' => fn ($query) => $query->orderByDesc('depth')->orderBy('id')->limit(3),
+                'descendants' => fn ($query) => $query->orderBy('depth')->orderBy('id')->limit(4),
             ]
         );
+
+        $this->assertEquals([2, 3, 4, 5], $users[0]->descendants->pluck('id')->all());
+        $this->assertEquals([12], $users[9]->descendants->pluck('id')->all());
+        $this->assertEquals([], $users[10]->descendants->pluck('id')->all());
+        $this->assertEquals([1, 1, 1, 2], $users[0]->descendants->pluck('depth')->all());
+        $this->assertEquals(['2', '3', '4', '2.5'], $users[0]->descendants->pluck('path')->all());
     }
 
     public function testLazyEagerLoadingAndSelf()

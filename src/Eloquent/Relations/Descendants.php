@@ -2,7 +2,7 @@
 
 namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Eloquent\Relations;
 
-use RuntimeException;
+use Illuminate\Database\Query\Expression;
 use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Eloquent\Relations\Traits\HasEagerLimit;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\Descendants as Base;
 
@@ -24,7 +24,42 @@ class Descendants extends Base
             if ($this->andSelf) {
                 $this->addGroupLimit($value);
             } else {
-                throw new RuntimeException('Eager loading limits are not supported on Descendants relationships.');
+                $grammar = $this->getEagerLimitGrammar();
+
+                $firstPathSegment = $grammar->compileFirstPathSegment(
+                    $this->related->qualifyColumn(
+                        $this->related->getPathName()
+                    )
+                );
+
+                $parentKeyQuery = $this->related->newModelQuery()
+                                                ->select($this->getForeignKeyName())
+                                                ->from($this->related->getTable(), 'laravel_alias')
+                                                ->where($this->localKey, new Expression($firstPathSegment))
+                                                ->limit(1);
+
+                $sql = $grammar->compileParentKeyOfFirstPathSegment(
+                    $this->related->qualifyColumn(
+                        $this->related->getPathName()
+                    ),
+                    $this->related->qualifyColumn(
+                        $this->related->getParentKeyName()
+                    ),
+                    $parentKeyQuery->getQuery()
+                );
+
+                $column = new Expression($sql);
+
+                $this->query->groupLimit($value, $column);
+
+                $this->query->getQuery()->addBinding(
+                    array_fill(
+                        0,
+                        substr_count($sql, '?'),
+                        $this->related->getPathSeparator()
+                    ),
+                    'select'
+                );
             }
         }
 

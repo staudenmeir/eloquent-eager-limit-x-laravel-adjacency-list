@@ -5,6 +5,7 @@ namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Eloquent\Relations
 use Illuminate\Database\Query\Expression;
 use RuntimeException;
 use Staudenmeir\EloquentEagerLimit\Relations\HasLimit;
+use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Query\Grammars\EagerLimitGrammar;
 use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Query\Grammars\MySqlGrammar;
 use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Query\Grammars\PostgresGrammar;
 use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Query\Grammars\SQLiteGrammar;
@@ -19,7 +20,7 @@ trait HasEagerLimit
      * @param int $value
      * @return void
      */
-    protected function addGroupLimit($value)
+    protected function addGroupLimit(int $value): void
     {
         $grammar = $this->getEagerLimitGrammar();
 
@@ -39,7 +40,7 @@ trait HasEagerLimit
                 substr_count($sql, '?'),
                 $this->related->getPathSeparator()
             ),
-            'groupBy'
+            'select'
         );
     }
 
@@ -48,7 +49,7 @@ trait HasEagerLimit
      *
      * @return \Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Query\Grammars\EagerLimitGrammar
      */
-    protected function getEagerLimitGrammar()
+    protected function getEagerLimitGrammar(): EagerLimitGrammar
     {
         $connection = $this->query->getQuery()->getConnection();
         $driver = $connection->getDriverName();
