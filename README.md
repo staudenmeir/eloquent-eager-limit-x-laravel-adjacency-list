@@ -34,7 +34,7 @@ class User extends Model
 
 ### Limitations
 
-`Descendants` relationships only support eager loading limit when the query is ordered breadth-first (siblings before children):
+`Descendants` relationships only support eager loading limits when the query is ordered breadth-first (siblings before children):
 
 ```php
 $users = User::with([
