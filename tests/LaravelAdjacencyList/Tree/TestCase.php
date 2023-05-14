@@ -1,22 +1,22 @@
 <?php
 
-namespace Staudenmeir\LaravelAdjacencyList\Tests;
+namespace Staudenmeir\LaravelAdjacencyList\Tests\Tree;
 
 use Carbon\Carbon;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use PHPUnit\Framework\TestCase as Base;
-use Staudenmeir\LaravelAdjacencyList\Tests\Models\Category;
-use Staudenmeir\LaravelAdjacencyList\Tests\Models\Post;
-use Staudenmeir\LaravelAdjacencyList\Tests\Models\Role;
-use Staudenmeir\LaravelAdjacencyList\Tests\Models\Tag;
-use Staudenmeir\LaravelAdjacencyList\Tests\Models\User;
-use Staudenmeir\LaravelAdjacencyList\Tests\Models\Video;
+use Staudenmeir\LaravelAdjacencyList\Tests\Tree\Models\Category;
+use Staudenmeir\LaravelAdjacencyList\Tests\Tree\Models\Post;
+use Staudenmeir\LaravelAdjacencyList\Tests\Tree\Models\Role;
+use Staudenmeir\LaravelAdjacencyList\Tests\Tree\Models\Tag;
+use Staudenmeir\LaravelAdjacencyList\Tests\Tree\Models\User;
+use Staudenmeir\LaravelAdjacencyList\Tests\Tree\Models\Video;
 
 abstract class TestCase extends Base
 {
-    protected $database;
+    protected string $database;
 
     protected function setUp(): void
     {
@@ -24,7 +24,7 @@ abstract class TestCase extends Base
 
         $this->database = getenv('DATABASE') ?: 'sqlite';
 
-        $config = require __DIR__.'/../config/database.php';
+        $config = require __DIR__.'/../../config/database.php';
 
         $db = new DB();
         $db->addConnection($config[$this->database]);
@@ -43,19 +43,14 @@ abstract class TestCase extends Base
         parent::tearDown();
     }
 
-    /**
-     * Migrate the database.
-     *
-     * @return void
-     */
-    protected function migrate()
+    protected function migrate(): void
     {
         DB::schema()->dropAllTables();
 
         DB::schema()->create(
             'users',
             function (Blueprint $table) {
-                $table->increments('id');
+                $table->id();
                 $table->string('slug')->unique();
                 $table->unsignedInteger('parent_id')->nullable();
                 $table->unsignedBigInteger('followers')->default(1);
@@ -135,12 +130,7 @@ abstract class TestCase extends Base
         );
     }
 
-    /**
-     * Seed the database.
-     *
-     * @return void
-     */
-    protected function seed()
+    protected function seed(): void
     {
         Model::unguard();
 

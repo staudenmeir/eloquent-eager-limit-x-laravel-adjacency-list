@@ -1,8 +1,8 @@
 <?php
 
-namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests;
+namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Tree;
 
-use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Models\User;
+use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Tree\Models\User;
 
 class SiblingsTest extends TestCase
 {

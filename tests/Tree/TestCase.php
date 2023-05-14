@@ -1,17 +1,17 @@
 <?php
 
-namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests;
+namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Tree;
 
 use Carbon\Carbon;
 use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Schema\Blueprint;
 use PHPUnit\Framework\TestCase as Base;
-use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Models\User;
+use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Tree\Models\User;
 
 abstract class TestCase extends Base
 {
-    protected $database;
+    protected string $database;
 
     protected function setUp(): void
     {
@@ -19,7 +19,7 @@ abstract class TestCase extends Base
 
         parent::setUp();
 
-        $config = require __DIR__.'/config/database.php';
+        $config = require __DIR__.'/../config/database.php';
 
         $db = new DB();
         $db->addConnection($config[$this->database]);
@@ -38,19 +38,14 @@ abstract class TestCase extends Base
         parent::tearDown();
     }
 
-    /**
-     * Migrate the database.
-     *
-     * @return void
-     */
-    protected function migrate()
+    protected function migrate(): void
     {
         DB::schema()->dropAllTables();
 
         DB::schema()->create(
             'users',
             function (Blueprint $table) {
-                $table->increments('id');
+                $table->id();
                 $table->string('slug')->unique();
                 $table->unsignedInteger('parent_id')->nullable();
                 $table->timestamps();
@@ -59,12 +54,7 @@ abstract class TestCase extends Base
         );
     }
 
-    /**
-     * Seed the database.
-     *
-     * @return void
-     */
-    protected function seed()
+    protected function seed(): void
     {
         Model::unguard();
 

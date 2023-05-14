@@ -1,9 +1,9 @@
 <?php
 
-namespace Staudenmeir\LaravelAdjacencyList\Tests;
+namespace Staudenmeir\LaravelAdjacencyList\Tests\Tree;
 
 use Staudenmeir\LaravelAdjacencyList\Eloquent\Relations\Descendants;
-use Staudenmeir\LaravelAdjacencyList\Tests\Models\User;
+use Staudenmeir\LaravelAdjacencyList\Tests\Tree\Models\User;
 
 class DescendantsTest extends TestCase
 {
@@ -15,6 +15,7 @@ class DescendantsTest extends TestCase
         $this->assertEquals([1, 2], $descendants->pluck('depth')->all());
         $this->assertEquals(['5', '5.8'], $descendants->pluck('path')->all());
         $this->assertEquals(['user-5', 'user-5/user-8'], $descendants->pluck('slug_path')->all());
+        $this->assertEquals(['user-5', 'user-8/user-5'], $descendants->pluck('reverse_slug_path')->all());
     }
 
     public function testLazyLoadingAndSelf()
@@ -24,6 +25,10 @@ class DescendantsTest extends TestCase
         $this->assertEquals([2, 5, 8], $descendantsAndSelf->pluck('id')->all());
         $this->assertEquals([0, 1, 2], $descendantsAndSelf->pluck('depth')->all());
         $this->assertEquals(['2', '2.5', '2.5.8'], $descendantsAndSelf->pluck('path')->all());
+        $this->assertEquals(
+            ['user-2', 'user-2/user-5', 'user-2/user-5/user-8'],
+            $descendantsAndSelf->pluck('slug_path')->all()
+        );
     }
 
     public function testLazyLoadingWithoutParentKey()

@@ -1,6 +1,6 @@
 <?php
 
-namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Models;
+namespace Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Tests\Tree\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
