@@ -23,6 +23,8 @@ Use this command if you are in PowerShell on Windows (e.g. in VS Code):
 
 ## Usage
 
+### Trees
+
 Use the `HasEagerLimitAndRecursiveRelationships` trait in your model:
 
 ```php
@@ -32,7 +34,7 @@ class User extends Model
 }
 ```
 
-### Limitations
+#### Limitations
 
 `Descendants` relationships only support eager loading limits when the query is ordered breadth-first (siblings before
 children):
@@ -46,6 +48,21 @@ $users = User::with([
 ```
 
 `*OfDescendants` relationships do not support eager loading limits.
+
+### Graphs
+
+Use the `HasEagerLimitAndGraphRelationships` trait in your model:
+
+```php
+class User extends Model
+{
+    use \Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Eloquent\HasEagerLimitAndGraphRelationships;
+}
+```
+
+#### Limitations
+
+Eager loading limits on graph relationships are not supported at the moment.
 
 ## Contributing
 
