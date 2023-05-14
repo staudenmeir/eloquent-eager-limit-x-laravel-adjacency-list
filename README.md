@@ -21,6 +21,13 @@ Use this command if you are in PowerShell on Windows (e.g. in VS Code):
 
     composer require staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list:"^^^^1.0"
 
+## Versions
+
+| Laravel | Package |
+|:--------|:--------|
+| 10.x    | 1.1     |
+| 9.x     | 1.0     |
+
 ## Usage
 
 ### Trees
@@ -54,7 +61,7 @@ $users = User::with([
 Use the `HasEagerLimitAndGraphRelationships` trait in your model:
 
 ```php
-class User extends Model
+class Node extends Model
 {
     use \Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Eloquent\HasEagerLimitAndGraphRelationships;
 }
