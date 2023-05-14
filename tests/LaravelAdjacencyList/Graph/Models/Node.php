@@ -4,6 +4,7 @@ namespace Staudenmeir\LaravelAdjacencyList\Tests\Graph\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Expression;
 use Staudenmeir\EloquentEagerLimitXLaravelAdjacencyList\Eloquent\HasEagerLimitAndGraphRelationships;
 
 class Node extends Model
@@ -33,7 +34,7 @@ class Node extends Model
                 ],
                 [
                     'name' => 'reverse_slug_path',
-                    'column' => 'slug',
+                    'column' => new Expression('nodes.slug'),
                     'separator' => '/',
                     'reverse' => true,
                 ],
