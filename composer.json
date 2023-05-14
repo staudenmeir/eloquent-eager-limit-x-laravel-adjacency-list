@@ -12,9 +12,10 @@
         "php": "^8.0.2",
         "illuminate/database": "^9.0",
         "staudenmeir/eloquent-eager-limit-x-laravel-cte": "v1.0",
-        "staudenmeir/laravel-adjacency-list": "^v1.10.1"
+        "staudenmeir/laravel-adjacency-list": "^v1.12.4"
     },
     "require-dev": {
+        "doctrine/dbal": "^3.3",
         "phpunit/phpunit": "^9.5",
         "nesbot/carbon": "^2.62.1",
         "staudenmeir/eloquent-has-many-deep": "^1.17"
