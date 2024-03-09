@@ -7,11 +7,14 @@
 [![Total Downloads](https://poser.pugx.org/staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list/downloads)](https://packagist.org/packages/staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list/stats)
 [![License](https://poser.pugx.org/staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list/license)](https://github.com/staudenmeir/eloquent-eager-limit-x-laravel-adjacency-list/blob/main/LICENSE)
 
+> [!IMPORTANT]
+> The `staudenmeir/eloquent-eager-limit` package's code has been merged into Laravel 11+ and eager loading limits are now supported natively.
+
 This Laravel package merges [staudenmeir/eloquent-eager-limit](https://github.com/staudenmeir/eloquent-eager-limit)
 and [staudenmeir/laravel-adjacency-list](https://github.com/staudenmeir/laravel-adjacency-list) to allow them being used
 in the same model.
 
-Supports Laravel 9.0+.
+Supports Laravel 9–10.
 
 ## Installation
 
